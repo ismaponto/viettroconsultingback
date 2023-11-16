@@ -1,5 +1,5 @@
 const express = require("express");
-const { jsonresponse } = require("../lib/jsonResponse.js");
+const { jsonresponse } = require("../lib/jsonresponse.js");
 const router = express.Router();
 const User = require('../schema/user.js');
 

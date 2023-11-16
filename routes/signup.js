@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { jsonresponse } = require('../lib/jsonResponse.js');
+const { jsonresponse } = require('../lib/jsonresponse.js');
 const User = require('../schema/user.js');
 
 function isSafePassword(password) {
