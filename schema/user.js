@@ -4,6 +4,7 @@ const { generateAccessToken, generateRefreshToken } = require('../auth/generateT
 const getUserInfo = require('../lib/getUserInfo.js');
 const Token = require('./token.js')
 
+
 const UserSchema = new mongoose.Schema({
     email: {
         type: String,
@@ -12,7 +13,10 @@ const UserSchema = new mongoose.Schema({
     },
     name: { type: String, required: true },
     surname: { type: String, required: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    isEmailConfirmed: { type: Boolean, default: false },
+    emailConfirmationToken: { type: String }
+
 });
 
 UserSchema.pre('save', function(next) {

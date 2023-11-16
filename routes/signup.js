@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const { jsonresponse } = require('../lib/jsonresponse.js');
 const User = require('../schema/user.js');
+const uuid = require('uuid');
+const confirmEmail = require('../auth/confirmEmail.js');
 
 function isSafePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
@@ -12,6 +14,7 @@ function isEmail(cadena) {
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+(\.[^\s@]+)+$/;
     return regex.test(cadena);
 }
+
 
 
 router.post('/', async(req, res) => {
@@ -28,15 +31,17 @@ router.post('/', async(req, res) => {
     }
 
     try {
+        const confirmationToken = uuid.v4();
         const userExists = await User.userExists(email);
 
         if (userExists) {
             return res.status(400).json(jsonresponse(400, { error: 'Email already in use' }));
         }
 
-        const newUser = new User({ email, name, surname, password });
-
+        const newUser = new User({ email, name, surname, password, confirmationToken });
         await newUser.save();
+        confirmEmail(email, name, surname, confirmationToken);
+
         return res.status(200).json(jsonresponse(200, { message: 'User created successfully' }));
     } catch (error) {
         console.error(error);
