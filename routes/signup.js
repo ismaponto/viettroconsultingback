@@ -23,10 +23,10 @@ router.post('/', async(req, res) => {
     if (!!!email || !!!name || !!!surname || !!!password) {
         return res.status(400).json(jsonresponse(400, { error: 'All fields are required' }));
     }
-    if (!isSafePassword(password)) {
+    if (isSafePassword(password)) {
         return res.status(400).json(jsonresponse(400, { error: 'La contraseña no es segura' }));
     }
-    if (!isEmail(email)) {
+    if (isEmail(email)) {
         res.status(400).json(jsonresponse(400, { error: 'El usuario debe ser un email' }))
     }
 
