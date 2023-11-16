@@ -1,6 +1,6 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const User = require('./models/user'); // Asegúrate de importar tu modelo de usuario
+const User = require('../schema/user'); // Asegúrate de importar tu modelo de usuario
 
 const router = express.Router();
 
