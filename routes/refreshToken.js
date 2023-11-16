@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { generateAccessToken } = require('../auth/generateTokens.js');
 const { verifyRefreshToken } = require('../auth/verifyTokens.js')
-const { jsonResponse } = require('../lib/jsonResponse.js');
+const { jsonResponse } = require('../lib/jsonresponse.js');
 const Token = require('../schema/token');
 
 router.post('/', async(req, res) => {

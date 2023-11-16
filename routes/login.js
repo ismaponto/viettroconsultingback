@@ -1,4 +1,4 @@
-const { jsonResponse } = require('../lib/jsonResponse.js');
+const { jsonResponse } = require('../lib/jsonresponse.js');
 const User = require('../schema/user.js');
 const router = require('express').Router();
 const getUserInfo = require('../lib/getUserInfo');
