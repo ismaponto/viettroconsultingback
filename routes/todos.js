@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { jsonresponse } = require('../lib/jsonresponse.js');
+const { jsonresponse } = require('../lib/jsonResponse.js');
 const Todo = require('../schema/todo.js');
 
 router.get('/', (req, res) => {
