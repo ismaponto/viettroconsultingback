@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { generateAccessToken } = require('../auth/generateTokens.js');
 const { verifyRefreshToken } = require('../auth/verifyTokens.js')
-const { jsonResponse } = require('../lib/jsonresponse.js');
+const { jsonresponse } = require('../lib/jsonresponse.js');
 const Token = require('../schema/token');
 
 router.post('/', async(req, res) => {
@@ -16,7 +16,7 @@ router.post('/', async(req, res) => {
             });
 
             if (!found) {
-                return res.status(401).send(jsonResponse(401, {
+                return res.status(401).send(jsonresponse(401, {
                     error: 'Unauthorized token 5'
                 }));
             }
@@ -24,16 +24,16 @@ router.post('/', async(req, res) => {
             const payload = verifyRefreshToken(found.token);;
             if (payload) {
                 const accessToken = generateAccessToken(payload);
-                return res.status(201).json(jsonResponse(201, { accessToken }));
+                return res.status(201).json(jsonresponse(201, { accessToken }));
             } else {
-                return res.status(401).json(jsonResponse(401, { error: 'Unauthorized token 1' }));
+                return res.status(401).json(jsonresponse(401, { error: 'Unauthorized token 1' }));
             }
         } catch (error) {
             console.error(error);
-            return res.status(401).json(jsonResponse(401, { error: 'Unauthorized token 2' }));
+            return res.status(401).json(jsonresponse(401, { error: 'Unauthorized token 2' }));
         }
     } else {
-        res.status(401).json(jsonResponse(401, { error: 'Unauthorized token 3' }));
+        res.status(401).json(jsonresponse(401, { error: 'Unauthorized token 3' }));
     }
 });
 

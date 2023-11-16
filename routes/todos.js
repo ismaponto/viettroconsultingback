@@ -1,9 +1,9 @@
 const router = require('express').Router();
-const { jsonResponse } = require('../lib/jsonresponse.js');
+const { jsonresponse } = require('../lib/jsonresponse.js');
 const Todo = require('../schema/todo.js');
 
 router.get('/', (req, res) => {
-    res.status(200).json(jsonResponse(200, [{
+    res.status(200).json(jsonresponse(200, [{
         id: 1,
         tittle: 'Hello World',
         body: 'This is a test',
@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
 
 router.put('/todos/:id', async(req, res) => {
     if (!req.body) {
-        res.status(400).json(jsonResponse(200, {
+        res.status(400).json(jsonresponse(200, {
             message: 'Tiene que estar completo'
         }))
         try {
@@ -35,10 +35,10 @@ router.put('/todos/:id', async(req, res) => {
                 expiredate: req.body.expiredate
             });
             const newTodo = await Todo(save);
-            return res.status(200).json(jsonResponse(200, { message: 'hubo un error en la solicitud', data: newTodo }));
+            return res.status(200).json(jsonresponse(200, { message: 'hubo un error en la solicitud', data: newTodo }));
 
         } catch (error) {
-            return res.status(400).json(jsonResponse(400, { error: 'hubo un error en la solicitud' }));
+            return res.status(400).json(jsonresponse(400, { error: 'hubo un error en la solicitud' }));
         }
     }
     const updatedTodo = req.body; // Datos actualizados de la tarea
