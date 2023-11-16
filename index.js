@@ -23,10 +23,10 @@ const refreshTokenRoutes = require('./routes/refreshToken.js');
 const loginRoutes = require('./routes/login.js');
 const userRoutes = require('./routes/user.js');
 const logoutRoutes = require('./routes/logout.js');
-const verifyEmail = require('./emailfFunctions/email.js');
+const verifyEmail = require('./routes/verify-email.js');
 // Utiliza las rutas como middleware
 app.use('/api/signup', signupRoutes);
-app.use('/api/verify-email')
+app.use('/api/verify-email', verifyEmail);
 app.use('/api/refresh-token', refreshTokenRoutes);
 app.use('/api/login', loginRoutes);
 app.use('/api/todos', authenticate, todosRoutes);
