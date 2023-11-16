@@ -1,5 +1,5 @@
 const getTokenFromHeader = require('./getTokenfromHeader');
-const { jsonResponse } = require('../lib/jsonResponse');
+// const { jsonResponse } = require('../lib/jsonResponse');
 const { verifyAccessToken } = require('./verifyTokens');
 
 function authenticate(req, res, next) {
@@ -13,7 +13,7 @@ function authenticate(req, res, next) {
     } else {
         res
             .status(401)
-            .send(jsonResponse(401, { error: 'Unauthorized token 0' }));
+            // .send(jsonResponse(401, { error: 'Unauthorized token 0' }));
     }
 }
 module.exports = authenticate;
