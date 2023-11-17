@@ -1,14 +1,17 @@
 const nodemailer = require('nodemailer');
 
-const confirmEmail = async function(email, name, surname, confirmationToken) {
-    // Configuración de transporte para nodemailer (puedes ajustarla según tus necesidades)
+const confirmEmail = function(email, name, surname, confirmationToken) {
+    // Configuración de transporte para nodemailer
+    console.log('Empieza el email');
+    console.log(process.env.EMAIL_USER);
     const transporter = nodemailer.createTransport({
-        service: 'gmail',
+        service: 'Gmail', // Nombre del servicio de correo (puedes usar otros servicios o configurar SMTP directamente)
         auth: {
-            user: process.env.EMAIL_ACCOUNT,
-            pass: process.env.EMAIL_PASSWORD
+            user: process.env.EMAIL_USER, // Tu dirección de correo electrónico
+            pass: process.env.EMAIL_PASSWORD // Tu contraseña de correo electrónico
         }
     });
+    console.log('Transporter creado');
 
     // Contenido del correo electrónico
     const mailOptions = {
@@ -21,15 +24,23 @@ const confirmEmail = async function(email, name, surname, confirmationToken) {
             '¡Gracias!' +
             'Si usted no se ha suscrito en la pagina web de Viettro Consulting, por favor ignore este mensaje'
     };
+    console.log('Mail options definidas');
 
     // Enviar el correo electrónico
-    transporter.sendMail(mailOptions, function(error, info) {
+
+    transporter.sendMail(mailOptions, (error, info) => {
         if (error) {
-            console.error('Error al enviar el correo electrónico:', error);
+            console.error('Error al enviar el correo: ' + error);
+
+            // Manejo de error al enviar correo
+            res.status(500).json({ error: 'Error al enviar el correo de confirmación.' });
         } else {
-            console.log('Correo electrónico enviado:', info.response);
+            console.log('Correo de confirmación enviado: ' + info.response);
+
+            // Éxito
+            res.json({ message: 'Correo de confirmación enviado.' });
         }
     });
 };
 
-module.exports = { confirmEmail }
+module.exports = { confirmEmail };

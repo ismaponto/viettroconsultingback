@@ -3,7 +3,7 @@ const router = express.Router();
 const { jsonresponse } = require('../lib/jsonresponse.js');
 const User = require('../schema/user.js');
 const uuid = require('uuid');
-const confirmEmail = require('../emailFunctions/emails.js');
+const { confirmEmail } = require('../emailFunctions/emails.js');
 
 function isSafePassword(password) {
     const regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,15}$/;
@@ -15,19 +15,19 @@ function isEmail(cadena) {
     return regex.test(cadena);
 }
 
-
-
 router.post('/', async(req, res) => {
     const { email, name, surname, password } = req.body;
 
-    if (!!!email || !!!name || !!!surname || !!!password) {
+    if (!email || !name || !surname || !password) {
         return res.status(400).json(jsonresponse(400, { error: 'All fields are required' }));
     }
+
     if (isSafePassword(password)) {
         return res.status(400).json(jsonresponse(400, { error: 'La contraseña no es segura' }));
     }
+
     if (isEmail(email)) {
-        res.status(400).json(jsonresponse(400, { error: 'El usuario debe ser un email' }))
+        return res.status(400).json(jsonresponse(400, { error: 'El usuario debe ser un email' }));
     }
 
     try {
@@ -38,9 +38,19 @@ router.post('/', async(req, res) => {
             return res.status(400).json(jsonresponse(400, { error: 'Email already in use' }));
         }
 
+        // Intenta enviar el correo electrónico de confirmación
+        try {
+            await confirmEmail(email, name, surname, confirmationToken);
+        } catch (error) {
+            console.error('Error al enviar el correo de confirmación:', error);
+            return res.status(500).json(jsonresponse(500, {
+                error: 'No pudimos enviarle un mail de confirmación'
+            }));
+        }
+
+        // Si el correo se envió correctamente, crea el usuario
         const newUser = new User({ email, name, surname, password, confirmationToken });
         await newUser.save();
-        confirmEmail(email, name, surname, confirmationToken);
 
         return res.status(200).json(jsonresponse(200, { message: 'User created successfully' }));
     } catch (error) {
