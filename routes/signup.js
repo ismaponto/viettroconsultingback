@@ -31,7 +31,7 @@ router.post('/', async(req, res) => {
     }
 
     try {
-        const confirmationToken = uuid.v4();
+        const emailConfirmationToken = uuid.v4();
         const userExists = await User.userExists(email);
 
         if (userExists) {
@@ -40,7 +40,7 @@ router.post('/', async(req, res) => {
 
         // Intenta enviar el correo electrónico de confirmación
         try {
-            await confirmEmail(email, name, surname, confirmationToken);
+            await confirmEmail(email, name, surname, emailConfirmationToken);
         } catch (error) {
             console.error('Error al enviar el correo de confirmación:', error);
             return res.status(500).json(jsonresponse(500, {
@@ -49,7 +49,7 @@ router.post('/', async(req, res) => {
         }
 
         // Si el correo se envió correctamente, crea el usuario
-        const newUser = new User({ email, name, surname, password, confirmationToken });
+        const newUser = new User({ email, name, surname, password, emailConfirmationToken });
         await newUser.save();
 
         return res.status(200).json(jsonresponse(200, { message: 'User created successfully' }));

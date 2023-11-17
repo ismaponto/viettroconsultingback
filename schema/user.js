@@ -15,7 +15,7 @@ const UserSchema = new mongoose.Schema({
     surname: { type: String, required: true },
     password: { type: String, required: true },
     isEmailConfirmed: { type: Boolean, default: false },
-    emailConfirmationToken: { type: String }
+    emailConfirmationToken: { type: String, required: true }
 
 });
 

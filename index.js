@@ -4,6 +4,8 @@ const app = express();
 require('dotenv').config();
 const mongoose = require('mongoose');
 const authenticate = require('./auth/authenticate');
+const emailconfirmed = require('./auth/emailconfirmed');
+
 const port = process.env.PORT || 5000;
 
 app.use(cors());
@@ -29,7 +31,7 @@ app.use('/api/signup', signupRoutes);
 app.use('/api/verify-email', verifyEmail);
 app.use('/api/refresh-token', refreshTokenRoutes);
 app.use('/api/login', loginRoutes);
-app.use('/api/todos', authenticate, todosRoutes);
+app.use('/api/todos', authenticate, emailconfirmed, todosRoutes);
 app.use('/api/user', authenticate, userRoutes);
 app.use('/api/logout', authenticate, logoutRoutes);
 

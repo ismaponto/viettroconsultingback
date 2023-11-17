@@ -8,12 +8,9 @@ router.get('/:emailConfirmationToken', async(req, res) => {
     const emailConfirmationToken = req.params.emailConfirmationToken;
 
     try {
-        // Verificar el token de confirmación de correo electrónico
-        const decodedToken = jwt.verify(emailConfirmationToken, 'tu_clave_secreta');
 
         // Obtener el usuario por su correo electrónico y token de confirmación
         const user = await User.findOne({
-            email: decodedToken.email,
             emailConfirmationToken: emailConfirmationToken,
             isEmailConfirmed: false
         });
