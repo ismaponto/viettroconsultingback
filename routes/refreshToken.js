@@ -24,7 +24,7 @@ router.post('/', async(req, res) => {
             const payload = verifyRefreshToken(found.token);;
             if (payload) {
                 const accessToken = generateAccessToken(payload);
-                return res.status(201).json(jsonresponse(201, { accessToken }));
+                return res.status(201).json(jsonresponse(201, accessToken));
             } else {
                 return res.status(401).json(jsonresponse(401, { error: 'Unauthorized token 1' }));
             }

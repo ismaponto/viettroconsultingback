@@ -9,14 +9,13 @@ const UserSchema = new mongoose.Schema({
     email: {
         type: String,
         required: true,
-        unique: true
+        unique: true,
     },
     name: { type: String, required: true },
     surname: { type: String, required: true },
     password: { type: String, required: true },
     isEmailConfirmed: { type: Boolean, default: false },
-    emailConfirmationToken: { type: String, required: true }
-
+    emailConfirmationToken: { type: String, required: true },
 });
 
 UserSchema.pre('save', function(next) {

@@ -4,11 +4,31 @@ const Todo = require('../schema/todo.js');
 
 router.get('/', async(req, res) => {
     try {
-        const idUser = req.user.id;
-        // Aquí deberías obtener los datos desde tu fuente de datos (base de datos, API, etc.)
-        const todos = await Todo.find({ idUser }); // Suponiendo que utilizas Mongoose para interactuar con MongoDB
+        // console.log(req.user, 'req.user');
+        // let idUser = req.user.email
+        // if (idUser.email) { idUser = idUser.email }
 
-        res.status(200).json(jsonresponse(200, todos));
+        // // Aquí deberías obtener los datos desde tu fuente de datos(base de datos, API, etc.)
+        // const todos = await Todo.find({ idUser }); // Suponiendo que utilizas Mongoose para interactuar con MongoDB
+
+        res.status(200).json(jsonresponse(200, [{
+            id: 1,
+            tittle: 'Hello World',
+            body: 'This is a test',
+            completed: false,
+            expiredate: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+            updated_at: new Date,
+
+        }, {
+            id: 2,
+            tittle: 'Hello World2',
+            body: 'This is a test2',
+            completed: false,
+            expiredate: new Date().toISOString(),
+            created_at: new Date().toISOString(),
+        }]))
+
     } catch (error) {
         console.error('Error en la solicitud:', error);
         return res.status(500).json(jsonresponse(500, { error: 'Hubo un error en la solicitud' }));

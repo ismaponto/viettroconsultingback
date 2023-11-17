@@ -7,7 +7,8 @@ router.get("/", async function(req, res, next) {
     try {
         // En este punto, `req.user` contiene la información del usuario autenticado
         const user = req.user.email
-        res.json(jsonresponse(200, user));
+        console.log(user);
+        res.json(jsonresponse(200, { user }));
     } catch (error) {
         console.error(error);
         res.status(500).json(jsonresponse(500, { error: 'Error interno del servidor' }));

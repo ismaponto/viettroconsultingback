@@ -2,8 +2,6 @@ const nodemailer = require('nodemailer');
 
 const confirmEmail = function(email, name, surname, confirmationToken) {
     // Configuración de transporte para nodemailer
-    console.log('Empieza el email');
-    console.log(process.env.EMAIL_USER);
     const transporter = nodemailer.createTransport({
         service: 'Gmail', // Nombre del servicio de correo (puedes usar otros servicios o configurar SMTP directamente)
         auth: {
@@ -11,7 +9,6 @@ const confirmEmail = function(email, name, surname, confirmationToken) {
             pass: process.env.EMAIL_PASSWORD // Tu contraseña de correo electrónico
         }
     });
-    console.log('Transporter creado');
 
     // Contenido del correo electrónico
     const mailOptions = {
@@ -24,7 +21,6 @@ const confirmEmail = function(email, name, surname, confirmationToken) {
             '¡Gracias!' +
             'Si usted no se ha suscrito en la pagina web de Viettro Consulting, por favor ignore este mensaje'
     };
-    console.log('Mail options definidas');
 
     // Enviar el correo electrónico
 

@@ -11,7 +11,7 @@ function authenticate(req, res, next) {
     } else {
         res
             .status(401)
-            .send(jsonresponse(401, { error: 'Unauthorized token 0' }));
+            .send(jsonresponse(401, { error: 'Unauthorized token' }));
     }
 }
 module.exports = authenticate;
