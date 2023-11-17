@@ -1,6 +1,6 @@
 const nodemailer = require('nodemailer');
 
-const confirmEmail = function(email, name, surname, confirmationToken) {
+const confirmEmail = async function(email, name, surname, confirmationToken) {
     // Configuración de transporte para nodemailer (puedes ajustarla según tus necesidades)
     const transporter = nodemailer.createTransport({
         service: 'gmail',
@@ -31,3 +31,5 @@ const confirmEmail = function(email, name, surname, confirmationToken) {
         }
     });
 };
+
+module.exports = { confirmEmail }
