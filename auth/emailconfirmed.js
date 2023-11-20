@@ -7,7 +7,6 @@ async function emailconfirmed(req, res, next) {
     if (!email) { email = req.user.email }
 
     try {
-        console.log(req.user.email, 'req.user.email')
 
         // Verifica si el usuario ha confirmado su correo electrónico
         const user = await User.findOne({ email });
